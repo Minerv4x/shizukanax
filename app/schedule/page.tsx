@@ -7,7 +7,7 @@ import "../globals.css";
 import { RevealWrapper } from "next-reveal";
 
 // Fetcher function to retrieve data
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url:any) => fetch(url).then((res) => res.json());
 
 export default function Page() {
   const { data, error, isLoading } = useSWR("/api/schedule", fetcher);
@@ -29,7 +29,7 @@ export default function Page() {
   // Render schedule data
   return (
     <div className="p-4">
-      {data.data.days.map((day, index) => (
+      {data.data.days.map((day:any, index:any) => (
         <div key={`${day.day}-${index}`} className="mb-8">
           <h2 className="text-2xl font-bold mb-4">{day.day}</h2>
           <RevealWrapper>
@@ -39,7 +39,7 @@ export default function Page() {
               style={{ maxWidth: "100%", overflowX: "auto" }}
             >
               <div className="flex space-x-4">
-                {day.animeList.map((anime) => (
+                {day.animeList.map((anime:any) => (
                   <div key={anime.animeId} className="relative flex-none w-40 h-56 mb-4">
                     <Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
                       {/* Image container with text overlay */}
