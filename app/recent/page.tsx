@@ -97,7 +97,6 @@ export default function AnimeEpisodes() {
             <PaginationPrevious
               href="#"
               onClick={() => handlePageClick(Math.max(page - 1, 1))}
-              disabled={page === 1}
             />
           </PaginationItem>
 
@@ -147,7 +146,6 @@ export default function AnimeEpisodes() {
             <PaginationNext
               href="#"
               onClick={() => handlePageClick(Math.min(page + 1, totalPages))}
-              disabled={page === totalPages}
             />
           </PaginationItem>
         </PaginationContent>
