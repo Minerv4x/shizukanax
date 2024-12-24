@@ -69,7 +69,7 @@ export default function Completed() {
         <RevealWrapper>
           {/* Create a responsive grid layout */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-            {data?.data?.animeList?.map((anime) => (
+            {data?.data?.animeList?.map((anime:any) => (
               <div key={anime.animeId} className="relative flex-none w-full h-56 mb-4 group">
                 {anime.samehadakuUrl ? ( // Check if samehadakuUrl is defined
                   <Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
@@ -116,7 +116,7 @@ export default function Completed() {
                 <div className="absolute bottom-0 left-0 w-full p-2 rounded-b bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <p className="text-xs text-left text-white px-2">Genres:</p>
                   <div className="flex flex-wrap gap-2 px-2">
-                    {anime.genreList?.map((genre) => (
+                    {anime.genreList?.map((genre:any) => (
                       genre.animeId ? ( // Check if genre.animeId is defined
                         <Link key={genre.animeId} href={genre.animeId}>
                           <p className="text-xs text-gray-200 hover:text-primary">{genre.title}</p>
@@ -140,7 +140,7 @@ export default function Completed() {
             <PaginationPrevious
               href="#"
               onClick={() => handlePageClick(Math.max(page - 1, 1))}
-              disabled={page === 1}
+              
             />
           </PaginationItem>
 
@@ -190,7 +190,6 @@ export default function Completed() {
             <PaginationNext
               href="#"
               onClick={() => handlePageClick(Math.min(page + 1, totalPages))}
-              disabled={page === totalPages}
             />
           </PaginationItem>
         </PaginationContent>

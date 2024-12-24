@@ -76,7 +76,7 @@ export default function Page() {
           <div className="mb-4">
             <h3 className="text-xl font-semibold">Genres:</h3>
             <ul className="list-disc pl-6">
-              {genreList?.map((genre) => (
+              {genreList?.map((genre:any) => (
                 <li key={genre.genreId}>
                   <a href={genre.samehadakuUrl} className="text-blue-500">
                     {genre.title}

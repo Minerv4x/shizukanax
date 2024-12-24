@@ -27,7 +27,7 @@ export default function Page() {
     return (
 
         <div className="flex flex-wrap justify-center gap-4 p-4">
-            {data?.data?.genreList?.map((genres) => (
+            {data?.data?.genreList?.map((genres:any) => (
                 <div key={genres.genreId} className="flex flex-col items-center">
                   <RevealWrapper>
 

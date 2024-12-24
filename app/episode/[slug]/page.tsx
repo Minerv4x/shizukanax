@@ -71,7 +71,7 @@ export default function EpisodePage() {
   const download = episode.downloadUrl; // Contains download URL data
 
   // Filter out invalid server qualities
-  const validServerQualities = serverQualities.filter((quality) => quality.serverList?.length > 0);
+  const validServerQualities = serverQualities.filter((quality:any) => quality.serverList?.length > 0);
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -139,11 +139,11 @@ export default function EpisodePage() {
               <h3 className="text-xl font-semibold">Available Resolutions:</h3>
               {validServerQualities.length > 0 ? (
                 <div className="space-y-4">
-                  {validServerQualities.map((quality, index) => (
+                  {validServerQualities.map((quality:any, index:any) => (
                     <div key={index}>
                       <h4 className="text-lg font-medium">{quality.title}</h4>
                       <div className="flex flex-wrap gap-2">
-                        {quality.serverList.map((server, i) => (
+                        {quality.serverList.map((server:any, i:any) => (
                           <Button
 
                             key={i}
@@ -169,16 +169,16 @@ export default function EpisodePage() {
         <div className="space-y-8 mt-8">
           <h3 className="text-xl font-semibold">Download Links:</h3>
           {download && download.formats.length > 0 ? (
-            download.formats.map((format, index) => (
+            download.formats.map((format:any, index:any) => (
               <div key={index} className="border-b pb-4 mb-4">
                 <h4 className="text-lg font-medium mb-2">{format.title}</h4>
                 <div className="space-y-6">
-                  {format.qualities.map((quality, qIndex) => (
+                  {format.qualities.map((quality:any, qIndex:any) => (
                     <div key={qIndex}>
                       <h5 className="text-md font-semibold mb-2">{quality.title}</h5>
                       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                         {quality.urls && quality.urls.length > 0 ? (
-                          quality.urls.map((url, uIndex) => (
+                          quality.urls.map((url:any, uIndex:any) => (
                             <Button
                               key={uIndex}
                               variant="secondary"

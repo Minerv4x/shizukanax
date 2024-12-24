@@ -15,7 +15,7 @@ import "./globals.css";
 import Image from "next/image"; // Import the Image component
 
 // Fetch data utility function
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url:any) => fetch(url).then((res) => res.json());
 
 export default function IndexPage() {
   const { data, error } = useSWR("/api/home", fetcher);
@@ -52,13 +52,13 @@ export default function IndexPage() {
         <Breadcrumb>
           <BreadcrumbList>
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} href="/">
+              <BreadcrumbLink  href="/">
                 Home
               </BreadcrumbLink>
             </BreadcrumbItem>
             <BreadcrumbSeparator />
             <BreadcrumbItem>
-              <BreadcrumbLink as={Link} href="/anime">
+              <BreadcrumbLink href="/anime">
                 Anime
               </BreadcrumbLink>
             </BreadcrumbItem>
@@ -74,7 +74,7 @@ export default function IndexPage() {
           <h2 className="text-2xl font-bold mb-6">Recent Episodes</h2>
           <SimpleBar forceVisible="x" autoHide={false} style={{ maxWidth: "100%" }}>
             <div className="flex gap-6 whitespace-nowrap">
-              {data.data.recent.episodeList.map((episode) => (
+              {data.data.recent.episodeList.map((episode:any) => (
                 <RevealWrapper key={episode.id || episode.title}> {/* Use episode.title as a fallback */}
                   <div className="group relative w-72 flex-shrink-0 rounded-md overflow-hidden shadow-lg">
                     <Link href={`/episode${new URL(episode.samehadakuUrl).pathname}`}>
@@ -108,8 +108,8 @@ export default function IndexPage() {
           <h2 className="text-2xl font-bold mb-6">Batch Releases</h2>
           <SimpleBar forceVisible="x" autoHide={false} style={{ maxWidth: "100%" }}>
             <div className="flex gap-6 whitespace-nowrap">
-              {data.data.batch.batchList.map((batch) => (
-                <RevealWrapper key={batch.id || batch.title}> {/* Use batch.title as a fallback */}
+              {data.data.batch.batchList.map((batch:any) => (
+                <RevealWrapper  key={batch.id || batch.title}> {/* Use batch.title as a fallback */}
                   <div className="group relative w-80 flex-shrink-0 rounded-md overflow-hidden shadow-lg">
                     <Link href={`${new URL(batch.samehadakuUrl).pathname}`}>
                       <div className="aspect-[16/9] relative">
@@ -141,7 +141,7 @@ export default function IndexPage() {
           <h2 className="text-2xl font-bold mb-6">Upcoming Movies</h2>
           <SimpleBar forceVisible="x" autoHide={false} style={{ maxWidth: "100%" }}>
             <div className="flex gap-6 whitespace-nowrap">
-              {data.data.movie.animeList.map((movie) => (
+              {data.data.movie.animeList.map((movie:any) => (
                 <RevealWrapper key={movie.id || movie.title}> {/* Use movie.title as a fallback */}
                   <div className="group relative w-80 flex-shrink-0 rounded-md overflow-hidden shadow-lg">
                     <Link href={`${new URL(movie.samehadakuUrl).pathname}`}>

@@ -76,7 +76,7 @@ export default function Page() {
           <div className="mb-4">
             <h3 className="text-xl font-semibold">Genres:</h3>
             <ul className="list-disc pl-6">
-              {genreList?.map((genre) => (
+              {genreList?.map((genre:any) => (
                 <li key={genre.genreId}>
                   <a href={genre.samehadakuUrl} className="text-blue-500">
                     {genre.title}
@@ -97,16 +97,16 @@ export default function Page() {
       <div className="space-y-8 mt-8">
         <h3 className="text-xl font-semibold">Download Links:</h3>
         {downloadFormats.length > 0 ? (
-          downloadFormats.map((format, formatIndex) => (
+          downloadFormats.map((format:any, formatIndex:any) => (
             <div key={formatIndex} className="border-b pb-3 mb-3">
               <h4 className="text-lg font-medium mb-2">{format.title}</h4>
               <div className="space-y-6">
-                {format.qualities.map((quality, qualityIndex) => (
+                {format.qualities.map((quality:any, qualityIndex:any) => (
                   <div key={qualityIndex}>
                     <h5 className="text-md font-semibold mb-2">{quality.title}</h5>
                     <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-3">
                       {quality.urls && quality.urls.length > 0 ? (
-                        quality.urls.map((urlObj, urlIndex) => (
+                        quality.urls.map((urlObj:any, urlIndex:any) => (
                           <Button
                             key={urlIndex}
                             variant="secondary"

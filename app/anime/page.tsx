@@ -12,7 +12,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url:any) => fetch(url).then((res) => res.json());
 
 export default function AnimeList() {
   const { data, error } = useSWR("/api/anime", fetcher);
@@ -48,13 +48,13 @@ export default function AnimeList() {
 </Breadcrumb>
 
       {/* Iterate through the 'list' of anime grouped by starting letter */}
-      {data.data.list.map((group, index) => (
+      {data.data.list.map((group:any, index:any) => (
         <div key={index} className="mb-8">
           <h3 className="text-xl font-semibold mb-4">{group.startWith}</h3>
 
 <RevealWrapper>
           <ul className="list-disc pl-5">
-            {group.animeList.map((anime) => (
+            {group.animeList.map((anime:any) => (
               <li key={anime.animeId}>
                 <Link href={`/anime/${anime.animeId}`} className=" hover:underline">
                   {anime.title}
