@@ -4,7 +4,7 @@ import { RevealWrapper } from 'next-reveal';
 import Link from "next/link";
 import Image from "next/image";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+const fetcher = (url:any) => fetch(url).then((res) => res.json());
 
 export default function Page() {
     const { data, error } = useSWR("/api/popular", fetcher);
@@ -26,7 +26,7 @@ export default function Page() {
             <div className="recent-section mb-12">
                 <h2 className="text-2xl font-bold mb-6">Recent Episodes</h2>
                 <div className="grid gap-4 grid-cols-2 md:gap-6 md:grid-cols-4">
-                    {data.data.animeList.map((popular) => (
+                    {data.data.animeList.map((popular:any) => (
                         <RevealWrapper key={`${popular.episodeId}-${popular.title}`}>
                             <div className="lok">
                                 <Link
