@@ -1,0 +1,29 @@
+/* Light Theme (Black Scrollbar) */
+.simplebar-track.simplebar-horizontal,
+.simplebar-track.simplebar-vertical {
+  background-color: #f1f1f12b; /* Light track color */
+}
+
+.simplebar-scrollbar:before {
+  background-color: #000; /* Black thumb color */
+}
+
+.simplebar-scrollbar:hover:before {
+  background-color: #333; /* Slightly lighter on hover */
+}
+
+/* Dark Theme (White Scrollbar) */
+@media (prefers-color-scheme: dark) {
+  .simplebar-track.simplebar-horizontal,
+  .simplebar-track.simplebar-vertical {
+    background-color: #2b2b2b; /* Dark track color */
+  }
+
+  .simplebar-scrollbar:before {
+    background-color: #fff; /* White thumb color */
+  }
+
+  .simplebar-scrollbar:hover:before {
+    background-color: #ddd; /* Slightly darker on hover */
+  }
+}
