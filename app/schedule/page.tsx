@@ -34,7 +34,7 @@ export default function Page() {
 
   // Render schedule data
   return (
-    <div className="p-4">
+    <div className="p-4 mx-auto max-w-7xl">
       {data.data.days.map((day: any, index: any) => (
         <div key={`${day.day}-${index}`} className="mb-8">
           <h2 className="text-2xl font-bold mb-4">{day.day}</h2>
@@ -51,7 +51,10 @@ export default function Page() {
             >
               <div className="flex space-x-4">
                 {day.animeList.map((anime: any) => (
-                  <div key={anime.animeId} className="relative flex-none w-40 h-56 mb-4">
+                  <div
+                    key={anime.animeId}
+                    className="relative flex-none w-40 h-56 mb-4"
+                  >
                     <Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
                       {/* Image container with text overlay */}
                       <div className="relative w-full h-full">
