@@ -118,8 +118,6 @@ export default function IndexPage() {
                       {/* Anime title on hover */}
                       <motion.div
                         className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black via-transparent to-transparent p-3 text-white"
-                        initial={{ opacity: 0 }}
-                        whileHover={{ opacity: 1 }}
                         transition={{ duration: 0.3 }}
                       >
                         <h1 className="text-xs font-semibold line-clamp-2">{episode.title}</h1>
