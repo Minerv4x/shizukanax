@@ -19,7 +19,9 @@ const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function AnimeEpisodes() {
   const [page, setPage] = useState(1); // State to track the current page
-  const { data, error } = useSWR(`/api/recent?page=${page}`, fetcher); // Fetch data based on the current page
+  const { data, error } = useSWR(`/api/recent?page=${page}`, fetcher, {
+    keepPreviousData: true, // Prevent re-fetching the previous data during pagination
+  }); // Fetch data based on the current page
 
   if (error) return <div>An error occurred. Please try again later.</div>;
 
@@ -38,7 +40,9 @@ export default function AnimeEpisodes() {
 
   // Function to handle pagination click events
   const handlePageClick = (newPage: number) => {
-    setPage(newPage);
+    if (newPage !== page) {
+      setPage(newPage);
+    }
   };
 
   // Function to calculate the range of pages to display in the pagination
@@ -61,34 +65,41 @@ export default function AnimeEpisodes() {
   return (
     <div className="anime-episodes container mx-auto px-4 py-8">
       <h2 className="text-2xl font-bold mb-6">Latest Anime Episodes</h2>
-
-      {/* Iterate over the episode list */}
-      <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-  {data.data.episodeList.map((episode: any) => (
-    <RevealWrapper key={episode.episodeId}>
-      <li className="rounded-lg shadow-md overflow-hidden">
-        <Link href={`/anime/${episode.episodeId}`}>
-          <div className="relative w-full h-48">
-            <Image
-              loading="lazy"
-              src={episode.poster}
-              alt={episode.title}
-              layout="fill"
-              objectFit="cover"
-              className="rounded-t-lg"
-            />
-            <div className="absolute bottom-2 left-2 bg-black bg-opacity-50 p-2 rounded">
-              <h3 className="text-sm font-semibold">{episode.title}</h3>
-              <p className="text-sm text-gray-300">{episode.releasedOn}</p>
-              <p className="text-sm text-gray-300">Episodes: {episode.episodes}</p>
+      {/* Anime List */}
+      <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
+        {data.data.episodeList.map((episode: any) => (
+          // Use a fallback if animeId is undefined
+          <RevealWrapper key={`${episode.animeId || episode.title}-${page}`}>
+            <div className="relative flex-none w-full h-56 mb-4 group">
+              <Link href={`/anime/${episode.animeId}`} legacyBehavior>
+                <div className="relative w-full h-full">
+                  <Image
+                    loading="lazy"
+                    width={400} // Fixed width for PC
+                    height={600} // Fixed height for PC
+                    src={episode.poster}
+                    alt={episode.title}
+                    className="w-full h-full object-cover rounded"
+                  />
+                  <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white p-2 rounded">
+                    <div className="text-center">
+                      <h3 className="font-semibold">{episode.title}</h3>
+                      <p className="text-sm">{episode.score} | {episode.type}</p>
+                      <p className="text-sm">{episode.status}</p>
+                    </div>
+                  </div>
+                </div>
+              </Link>
+              {/* Anime genres section, visible on hover */}
+              <div className="absolute bottom-0 left-0 w-full p-2 rounded-b bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                <p className="text-xs text-left text-white px-2">Release: {episode.releasedOn}</p>
+                <div className="flex flex-wrap gap-2 px-2">
+                </div>
+              </div>
             </div>
-          </div>
-        </Link>
-      </li>
-    </RevealWrapper>
-  ))}
-</ul>
-
+          </RevealWrapper>
+        ))}
+      </div>
 
       {/* Pagination */}
       <Pagination className="mt-8">
@@ -96,7 +107,10 @@ export default function AnimeEpisodes() {
           <PaginationItem>
             <PaginationPrevious
               href="#"
-              onClick={() => handlePageClick(Math.max(page - 1, 1))}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePageClick(Math.max(page - 1, 1));
+              }}
             />
           </PaginationItem>
 
@@ -105,7 +119,10 @@ export default function AnimeEpisodes() {
               <PaginationItem>
                 <PaginationLink
                   href="#"
-                  onClick={() => handlePageClick(1)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageClick(1);
+                  }}
                   isActive={page === 1}
                 >
                   1
@@ -119,7 +136,10 @@ export default function AnimeEpisodes() {
             <PaginationItem key={startPage + index}>
               <PaginationLink
                 href="#"
-                onClick={() => handlePageClick(startPage + index)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handlePageClick(startPage + index);
+                }}
                 isActive={page === startPage + index}
               >
                 {startPage + index}
@@ -133,7 +153,10 @@ export default function AnimeEpisodes() {
               <PaginationItem>
                 <PaginationLink
                   href="#"
-                  onClick={() => handlePageClick(totalPages)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    handlePageClick(totalPages);
+                  }}
                   isActive={page === totalPages}
                 >
                   {totalPages}
@@ -145,7 +168,10 @@ export default function AnimeEpisodes() {
           <PaginationItem>
             <PaginationNext
               href="#"
-              onClick={() => handlePageClick(Math.min(page + 1, totalPages))}
+              onClick={(e) => {
+                e.preventDefault();
+                handlePageClick(Math.min(page + 1, totalPages));
+              }}
             />
           </PaginationItem>
         </PaginationContent>

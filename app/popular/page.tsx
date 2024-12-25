@@ -22,7 +22,7 @@ export default function Page() {
       );
 
     return (
-        <div className="p-4 max-w-[1200px] mx-auto"> {/* Restrict max width for the page */}
+        (<div className="p-4 max-w-[1200px] mx-auto"> {/* Restrict max width for the page */}
             <div className="recent-section mb-12">
                 <h2 className="text-2xl font-bold mb-6">Recent Episodes</h2>
                 <div className="grid gap-4 grid-cols-2 md:gap-6 md:grid-cols-4">
@@ -32,7 +32,7 @@ export default function Page() {
                                 <Link
                                     href={`${new URL(popular.samehadakuUrl).pathname}`}
                                     className="block group"
-                                >
+                                    legacyBehavior>
                                     <div className="relative w-full rounded-md overflow-hidden shadow-lg">
                                         <div className="relative w-full pb-[56.25%]"> {/* 16:9 aspect ratio */}
                                             <Image
@@ -62,6 +62,6 @@ export default function Page() {
                     ))}
                 </div>
             </div>
-        </div>
+        </div>)
     );
 }

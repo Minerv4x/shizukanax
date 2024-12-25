@@ -62,33 +62,32 @@ export default function Page() {
   const { startPage, endPage } = calculatePaginationRange(totalPages, page);
 
   return (
-    <div className="p-4">
+    (<div className="p-4">
       {/* Breadcrumb */}
       <nav className="mb-4">
         <ul className="flex items-center space-x-2 text-sm text-gray-500">
           <li>
-            <Link href="/">
-              <a className="hover:text-gray-800 dark:hover:text-gray-300">Home</a>
+            <Link href="/" className="hover:text-gray-800 dark:hover:text-gray-300">
+              Home
             </Link>
           </li>
           <li>/</li>
           <li>
-            <Link href="/genres">
-              <a className="hover:text-gray-800 dark:hover:text-gray-300">Genres</a>
+            <Link href="/genres" className="hover:text-gray-800 dark:hover:text-gray-300">
+              Genres
             </Link>
           </li>
           <li>/</li>
           <li className="text-gray-800 dark:text-gray-300">{data.genreName}</li>
         </ul>
       </nav>
-
       <div className="mb-8">
         <RevealWrapper>
           {/* Create a responsive grid layout */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
             {data?.data?.animeList?.map((anime:any) => (
               <div key={anime.animeId} className="relative flex-none w-full h-56 mb-4 group">
-                <Link href={`/anime/${anime.animeId}`}>
+                <Link href={`/anime/${anime.animeId}`} legacyBehavior>
                   {/* Image container with text overlay */}
                   <div className="relative w-full h-full">
                     <Image
@@ -114,7 +113,7 @@ export default function Page() {
                   <p className="text-xs text-left text-white px-2">Genres:</p>
                   <div className=" flex flex-wrap gap-2 px-2">
                     {anime.genreList?.map((genre:any) => (
-                      <Link key={genre.genreId} href={`${genre.genreId}`}>
+                      <Link key={genre.genreId} href={`${genre.genreId}`} legacyBehavior>
                         <p className="text-xs text-gray-200 hover:text-primary">{genre.title}</p>
                       </Link>
                     ))}
@@ -125,7 +124,6 @@ export default function Page() {
           </div>
         </RevealWrapper>
       </div>
-
       {/* Pagination */}
       <Pagination className="mt-8">
         <PaginationContent>
@@ -186,6 +184,6 @@ export default function Page() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-    </div>
+    </div>)
   );
 }

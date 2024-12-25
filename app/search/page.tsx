@@ -50,13 +50,11 @@ function SearchContent() {
   );
 
   return (
-    <div className="p-4">
+    (<div className="p-4">
       {/* Display loading state */}
       {data === undefined && <div>Loading...</div>}
-
       {/* Display error state */}
       {error && <div>Error fetching data</div>}
-
       {/* Display search results or no results found message */}
       {data?.ok && data.data.animeList.length > 0 ? (
         <div className="space-y-4">
@@ -66,7 +64,7 @@ function SearchContent() {
               className="flex flex-col items-start gap-4 border-b pb-4 md:flex-row"
             >
               {/* Anime Image */}
-              <Link href={`/anime/${item.animeId}`} className="shrink-0">
+              <Link href={`/anime/${item.animeId}`} className="shrink-0" legacyBehavior>
                 <Image
                   src={item.poster}
                   alt={item.title}
@@ -94,7 +92,7 @@ function SearchContent() {
       ) : (
         <div>No results found.</div>
       )}
-    </div>
+    </div>)
   );
 }
 

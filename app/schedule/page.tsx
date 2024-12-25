@@ -4,10 +4,10 @@ import SimpleBar from "simplebar-react";
 import useSWR from "swr";
 import "simplebar-react/dist/simplebar.min.css";
 import "../globals.css";
-import { RevealWrapper } from "next-reveal";
+import { motion } from "framer-motion";
 
 // Fetcher function to retrieve data
-const fetcher = (url:any) => fetch(url).then((res) => res.json());
+const fetcher = (url: any) => fetch(url).then((res) => res.json());
 
 export default function Page() {
   const { data, error, isLoading } = useSWR("/api/schedule", fetcher);
@@ -26,20 +26,31 @@ export default function Page() {
       </div>
     );
 
+  // Animation variants
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0 },
+  };
+
   // Render schedule data
   return (
     <div className="p-4">
-      {data.data.days.map((day:any, index:any) => (
+      {data.data.days.map((day: any, index: any) => (
         <div key={`${day.day}-${index}`} className="mb-8">
           <h2 className="text-2xl font-bold mb-4">{day.day}</h2>
-          <RevealWrapper>
+          <motion.div
+            initial="hidden"
+            animate="visible"
+            variants={itemVariants}
+            transition={{ duration: 0.5, delay: index * 0.1 }} // Delay for staggered effect
+          >
             <SimpleBar
               forceVisible={true} // make horizontal scrollbar always visible
               autoHide={false} // don't hide the scrollbar
               style={{ maxWidth: "100%", overflowX: "auto" }}
             >
               <div className="flex space-x-4">
-                {day.animeList.map((anime:any) => (
+                {day.animeList.map((anime: any) => (
                   <div key={anime.animeId} className="relative flex-none w-40 h-56 mb-4">
                     <Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
                       {/* Image container with text overlay */}
@@ -65,7 +76,7 @@ export default function Page() {
                 ))}
               </div>
             </SimpleBar>
-          </RevealWrapper>
+          </motion.div>
         </div>
       ))}
     </div>

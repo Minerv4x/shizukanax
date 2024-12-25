@@ -64,7 +64,7 @@ export default function Completed() {
   const { startPage, endPage } = calculatePaginationRange(totalPages, page);
 
   return (
-    <div className="p-4">
+    (<div className="p-4">
       <div className="mb-8">
         <RevealWrapper>
           {/* Create a responsive grid layout */}
@@ -72,7 +72,7 @@ export default function Completed() {
             {data?.data?.batchList?.map((anime:any) => (
               <div key={anime.animeId} className="relative flex-none w-full h-56 mb-4 group">
                 {anime.samehadakuUrl ? ( // Check if samehadakuUrl is defined
-                  <Link href={anime.samehadakuUrl}>
+                  (<Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
                     {/* Image container with text overlay */}
                     <div className="relative w-full h-full">
                       <Image
@@ -91,7 +91,7 @@ export default function Completed() {
                         </div>
                       </div>
                     </div>
-                  </Link>
+                  </Link>)
                 ) : (
                   <div className="relative w-full h-full">
                     <Image
@@ -118,9 +118,9 @@ export default function Completed() {
                   <div className="flex flex-wrap gap-2 px-2">
                     {anime.genreList?.map((genre:any) => (
                       genre.animeId ? ( // Check if genre.animeId is defined
-                        <Link key={genre.animeId} href={genre.animeId}>
+                        (<Link key={genre.animeId} href={genre.animeId} legacyBehavior>
                           <p className="text-xs text-gray-200 hover:text-primary">{genre.title}</p>
-                        </Link>
+                        </Link>)
                       ) : (
                         <p key={genre.title} className="text-xs text-gray-200">{genre.title}</p>
                       )
@@ -132,7 +132,6 @@ export default function Completed() {
           </div>
         </RevealWrapper>
       </div>
-
       {/* Pagination */}
       <Pagination className="mt-8">
         <PaginationContent>
@@ -193,6 +192,6 @@ export default function Completed() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-    </div>
+    </div>)
   );
 }

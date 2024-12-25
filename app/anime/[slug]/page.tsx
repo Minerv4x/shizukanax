@@ -3,7 +3,14 @@ import useSWR from "swr";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
-
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator,
+} from "@/components/ui/breadcrumb"
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page() {
@@ -49,9 +56,29 @@ export default function Page() {
   } = seriesData?.data || {};
 
   return (
-    <div className="container mx-auto px-4 py-6">
+    (<div className="container mx-auto px-4 py-6">
+            <Breadcrumb>
+<BreadcrumbList>
+<BreadcrumbItem>
+  <Link href="/" className="breadcrumb-link">
+    Home
+  </Link>
+</BreadcrumbItem>
+  <BreadcrumbSeparator />
+  <BreadcrumbItem>
+  <Link href="/" className="breadcrumb-link">
+    Home
+  </Link>
+</BreadcrumbItem>
+  <BreadcrumbSeparator />
+  <BreadcrumbItem>
+    <BreadcrumbPage>{title}</BreadcrumbPage>
+  </BreadcrumbItem>
+  <BreadcrumbItem>
+  </BreadcrumbItem>
+</BreadcrumbList>
+</Breadcrumb>
       <h1 className="text-3xl font-bold mb-4">{title}</h1>
-
       {/* Flex layout for image and synopsis */}
       <div className="flex flex-col md:flex-row mb-6">
         {/* Image on top for mobile and smaller screens */}
@@ -92,7 +119,6 @@ export default function Page() {
           </div>
         </div>
       </div>
-
       {/* Episodes List */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold">Episodes:</h3>
@@ -103,7 +129,7 @@ export default function Page() {
                 key={episode.episodeId} // Use episode.episodeId for unique keys
                 className="p-4 border border-gray-300 rounded-lg hover:bg-gray-100"
               >
-                <Link href={`/episode/${episode.episodeId}`}>
+                <Link href={`/episode/${episode.episodeId}`} legacyBehavior>
                   <p className="text-blue-500 hover:text-blue-700 font-semibold text-center block">
                     Episode: {episode.title}
                   </p>
@@ -115,6 +141,6 @@ export default function Page() {
           <p>No episodes available.</p>
         )}
       </div>
-    </div>
+    </div>)
   );
 }
