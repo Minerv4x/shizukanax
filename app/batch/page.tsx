@@ -118,8 +118,8 @@ export default function Completed() {
                   <div className="flex flex-wrap gap-2 px-2">
                     {anime.genreList?.map((genre:any) => (
                       genre.animeId ? ( // Check if genre.animeId is defined
-                        (<Link key={genre.animeId} href={genre.animeId} legacyBehavior>
-                          <p className="text-xs text-gray-200 hover:text-primary">{genre.title}</p>
+                        (<Link key={genre.animeId} href={genre.animeId} >
+                          <h1 className="text-xs text-gray-200 hover:text-primary">{genre.title}</h1>
                         </Link>)
                       ) : (
                         <p key={genre.title} className="text-xs text-gray-200">{genre.title}</p>

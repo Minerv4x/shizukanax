@@ -3,6 +3,7 @@ import useSWR from "swr";
 import { useParams } from "next/navigation";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
+import Link from "next/link";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -78,9 +79,9 @@ export default function Page() {
             <ul className="list-disc pl-6">
               {genreList?.map((genre:any) => (
                 <li key={genre.genreId}>
-                  <a href={genre.samehadakuUrl} className="text-blue-500">
+                  <Link href={`${new URL(genre.samehadakuUrl).pathname}`} className="text-blue-500">
                     {genre.title}
-                  </a>
+                  </Link>
                 </li>
               ))}
             </ul>
