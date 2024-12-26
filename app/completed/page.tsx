@@ -12,7 +12,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination"; // Adjust the import path as necessary
-import { RevealWrapper } from "next-reveal";
+import BlurFade from "@/components/ui/blur-fade";
 
 // Fetch function
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -68,7 +68,8 @@ export default function Completed() {
       {/* Anime List */}
       <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
         {data.data.animeList.map((anime: any) => (
-          <RevealWrapper key={anime.animeId}>
+          <BlurFade delay={0.25} inView key={anime.animeId}>
+
             <div className="relative flex-none w-full h-56 mb-4 group">
               <Link href={`/anime/${anime.animeId}`} legacyBehavior>
                 <div className="relative w-full h-full">
@@ -79,7 +80,7 @@ export default function Completed() {
                     src={anime.poster}
                     alt={anime.title}
                     className="w-full h-full object-cover rounded"
-                  />
+                    />
                   <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white p-2 rounded">
                     <div className="text-center">
                       <h3 className="font-semibold">{anime.title}</h3>
@@ -105,7 +106,7 @@ export default function Completed() {
                 </div>
               </div>
             </div>
-          </RevealWrapper>
+                  </BlurFade>
         ))}
       </div>
 

@@ -11,6 +11,7 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb"
+import { Button } from "@/components/ui/button";
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Page() {
@@ -51,6 +52,7 @@ export default function Page() {
     english,
     synopsis,
     genreList,
+    batchList,
     episodeList,
     aired,
   } = seriesData?.data || {};
@@ -119,6 +121,15 @@ export default function Page() {
           </div>
         </div>
       </div>
+      <div>
+      {batchList?.map((batch:any) => (
+                  <Link href={`${new URL(batch.samehadakuUrl).pathname}`} >
+                    <Button>
+                      {batch.title}
+                      </Button>
+                  </Link>
+              ))}
+          </div>
       {/* Episodes List */}
       <div className="mb-4">
         <h3 className="text-xl font-semibold">Episodes:</h3>
@@ -131,7 +142,7 @@ export default function Page() {
               >
                 <Link href={`/episode/${episode.episodeId}`} legacyBehavior>
                   <p className="text-blue-500 hover:text-blue-700 font-semibold text-center block">
-                    Episode: {episode.title}
+                    Episode {episode.title}
                   </p>
                 </Link>
               </div>

@@ -1,7 +1,6 @@
 "use client";
 import useSWR from "swr";
 import Link from "next/link";
-import { RevealWrapper } from "next-reveal";
 import Image from "next/image";
 import { useState } from "react";
 import {
@@ -13,6 +12,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination"; // Adjust the import path as necessary
+import BlurFade from "@/components/ui/blur-fade";
 
 // Fetch data function
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -64,15 +64,15 @@ export default function Completed() {
   const { startPage, endPage } = calculatePaginationRange(totalPages, page);
 
   return (
-    (<div className="p-4">
+    <div className="p-4">
       <div className="mb-8">
-        <RevealWrapper>
-          {/* Create a responsive grid layout */}
+        {/* Create a responsive grid layout */}
+        <BlurFade delay={0.25} inView>
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
-            {data?.data?.batchList?.map((anime:any) => (
-              <div key={anime.animeId} className="relative flex-none w-full h-56 mb-4 group">
+            {data?.data?.batchList?.map((anime: any) => (
+              <div key={anime.animeId || anime.title} className="relative flex-none w-full h-56 mb-4 group">
                 {anime.samehadakuUrl ? ( // Check if samehadakuUrl is defined
-                  (<Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
+                  <Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
                     {/* Image container with text overlay */}
                     <div className="relative w-full h-full">
                       <Image
@@ -91,7 +91,7 @@ export default function Completed() {
                         </div>
                       </div>
                     </div>
-                  </Link>)
+                  </Link>
                 ) : (
                   <div className="relative w-full h-full">
                     <Image
@@ -116,22 +116,25 @@ export default function Completed() {
                 <div className="absolute bottom-0 left-0 w-full p-2 rounded-b bg-black bg-opacity-60 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                   <p className="text-xs text-left text-white px-2">Genres:</p>
                   <div className="flex flex-wrap gap-2 px-2">
-                    {anime.genreList?.map((genre:any) => (
-                      genre.animeId ? ( // Check if genre.animeId is defined
-                        (<Link key={genre.animeId} href={genre.animeId} >
-                          <h1 className="text-xs text-gray-200 hover:text-primary">{genre.title}</h1>
-                        </Link>)
-                      ) : (
-                        <p key={genre.title} className="text-xs text-gray-200">{genre.title}</p>
-                      )
+                    {anime.genreList?.map((genre: any) => (
+                      <div key={genre.animeId || genre.title}>
+                        {genre.animeId ? ( // Check if genre.animeId is defined
+                          <Link href={genre.animeId}>
+                            <h1 className="text-xs text-gray-200 hover:text-primary">{genre.title}</h1>
+                          </Link>
+                        ) : (
+                          <p className="text-xs text-gray-200">{genre.title}</p>
+                        )}
+                      </div>
                     ))}
                   </div>
                 </div>
               </div>
             ))}
           </div>
-        </RevealWrapper>
+        </BlurFade>
       </div>
+
       {/* Pagination */}
       <Pagination className="mt-8">
         <PaginationContent>
@@ -192,6 +195,6 @@ export default function Completed() {
           </PaginationItem>
         </PaginationContent>
       </Pagination>
-    </div>)
+    </div>
   );
 }

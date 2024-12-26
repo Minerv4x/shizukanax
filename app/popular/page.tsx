@@ -1,8 +1,8 @@
 "use client";
 import useSWR from "swr";
-import { RevealWrapper } from 'next-reveal';
 import Link from "next/link";
 import Image from "next/image";
+import BlurFade from "@/components/ui/blur-fade";
 
 const fetcher = (url:any) => fetch(url).then((res) => res.json());
 
@@ -27,8 +27,9 @@ export default function Page() {
                 <h2 className="text-2xl font-bold mb-6">Recent Episodes</h2>
                 <div className="grid gap-4 grid-cols-2 md:gap-6 md:grid-cols-4">
                     {data.data.animeList.map((popular:any) => (
-                        <RevealWrapper key={`${popular.episodeId}-${popular.title}`}>
-                            <div className="lok">
+                        <BlurFade delay={0.25} inView>
+
+                            <div className="lok" key={popular.animeId}>
                                 <Link
                                     href={`${new URL(popular.samehadakuUrl).pathname}`}
                                     className="block group"
@@ -41,11 +42,10 @@ export default function Page() {
                                                 fill={true}	
                                                 blurDataURL={popular.poster}
                                                 loading="lazy"	
-                                                placeholder="blur"	
                                                 style={{ objectFit: "cover" }}	
                                                 className="h-full w-full"
                                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                                            />
+                                                />
                                             {/* Gradient Overlay */}
                                             <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent" />
                                             {/* Text Overlay */}
@@ -58,10 +58,10 @@ export default function Page() {
                                     </div>
                                 </Link>
                             </div>
-                        </RevealWrapper>
+                    </BlurFade>
                     ))}
                 </div>
             </div>
-        </div>)
-    );
+            </div>)
+        );
 }

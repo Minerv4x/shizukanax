@@ -1,34 +1,61 @@
 "use client"
 import { useEffect, useState } from "react";
-import { DotPattern } from "@/components/ui/dot-pattern";
+import { database, ref, set, onValue, get, runTransaction } from "../../firebaseConfig";
 
-export default function MyPage() {
-  const [isClient, setIsClient] = useState(false);
+export default function Page() {
+  const [activeUsers, setActiveUsers] = useState(0);
 
   useEffect(() => {
-    setIsClient(true); // Ensure the DotPattern only renders on the client side
-  }, []);
+    const visitorsRef = ref(database, "activeUsers"); // Reference to the active users count in the database
+    const userRef = ref(database, `visitors/${Date.now()}`); // Unique reference for each visitor
 
-  if (!isClient) {
-    return null; // Prevent server-side rendering issues
-  }
+    // Fetch the current active users count from Firebase when the page loads
+    const getInitialCount = async () => {
+      const snapshot = await get(visitorsRef);
+      if (snapshot.exists()) {
+        setActiveUsers(snapshot.val()); // Set the initial active user count
+      }
+    };
+
+    getInitialCount(); // Call to fetch the initial active user count
+
+    // Increment active users count if this is the user's first visit in this session
+    if (!sessionStorage.getItem('userVisited')) {
+      // Mark the user as visited to prevent counting them on refresh
+      sessionStorage.setItem('userVisited', 'true');
+
+      // Set user data for this session
+      set(userRef, { active: true })
+        .then(() => {
+          // Increment the active users count using a transaction
+          runTransaction(visitorsRef, (currentCount) => {
+            return (currentCount || 0) + 1; // Safely increment count
+          }).then(() => {
+            // After increment, update the active users in the state
+            getInitialCount(); // Re-fetch to update the state
+          }).catch((error) => console.error("Error updating active users:", error));
+        })
+        .catch((error) => console.error("Error writing user data:", error));
+    }
+
+    // Cleanup when the user leaves (decrement active user count)
+    return () => {
+      set(userRef, null); // Remove user data when leaving
+
+      // Decrement the active users count
+      runTransaction(visitorsRef, (currentCount) => {
+        return (currentCount && currentCount > 0) ? currentCount - 1 : 0; // Decrement count safely
+      }).then(() => {
+        // After decrement, update the active users in the state
+        getInitialCount(); // Re-fetch to update the state
+      }).catch((error) => console.error("Error decrementing active users:", error));
+    };
+  }, []); // Empty dependency array ensures the effect runs only once on mount
 
   return (
     <div>
-      {/* DotPattern as background */}
-      <DotPattern
-        color="rgba(0, 0, 0, 0.1)"  // Set dot color, this is a translucent black
-        size={30}                   // Size of the dots
-        radius={10}                 // Border radius of the dots
-        opacity={0.3}               // Dot opacity
-        className="absolute inset-0 z-[-1]" // To place it in the background
-      />
-      
-      {/* Your content */}
-      <section className="relative z-10 p-8">
-        <h1 className="text-3xl font-bold">Welcome to My Website</h1>
-        <p>This is some content over a dot pattern background.</p>
-      </section>
+      <h1>Active Users: {activeUsers}</h1>
+      <p>Your Page Content</p>
     </div>
   );
 }

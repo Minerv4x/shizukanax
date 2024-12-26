@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
-import SimpleBar from "simplebar-react";
 import useSWR from "swr";
-import "simplebar-react/dist/simplebar.min.css";
 import "../globals.css";
 import { motion } from "framer-motion";
+import BlurFade from "@/components/ui/blur-fade";
 
 // Fetcher function to retrieve data
 const fetcher = (url: any) => fetch(url).then((res) => res.json());
@@ -35,6 +34,7 @@ export default function Page() {
   // Render schedule data
   return (
     <div className="p-4 mx-auto max-w-7xl">
+
       {data.data.days.map((day: any, index: any) => (
         <div key={`${day.day}-${index}`} className="mb-8">
           <h2 className="text-2xl font-bold mb-4">{day.day}</h2>
@@ -43,42 +43,39 @@ export default function Page() {
             animate="visible"
             variants={itemVariants}
             transition={{ duration: 0.5, delay: index * 0.1 }} // Delay for staggered effect
-          >
-            <SimpleBar
-              forceVisible={true} // make horizontal scrollbar always visible
-              autoHide={false} // don't hide the scrollbar
-              style={{ maxWidth: "100%", overflowX: "auto" }}
             >
-              <div className="flex space-x-4">
-                {day.animeList.map((anime: any) => (
-                  <div
-                    key={anime.animeId}
-                    className="relative flex-none w-40 h-56 mb-4"
-                  >
-                    <Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
-                      {/* Image container with text overlay */}
-                      <div className="relative w-full h-full">
-                        <img
-                          src={anime.poster}
-                          alt={anime.title}
-                          className="w-full h-full object-cover rounded"
+            {/* Horizontal Scroll Container */}
+            <div className="flex space-x-4 overflow-x-auto">
+              {day.animeList.map((anime: any) => (
+                <BlurFade delay={0.25} inView key={anime.animeId}>
+                <div
+                  key={anime.animeId}
+                  className="relative flex-none w-40 h-56 mb-1"
+                >
+                  <Link href={`${new URL(anime.samehadakuUrl).pathname}`}>
+                    {/* Image container with text overlay */}
+                    <div className="relative w-full h-full">
+                      <img
+                        src={anime.poster}
+                        alt={anime.title}
+                        className="w-full h-full object-cover rounded"
                         />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white p-2 rounded">
-                          <div className="text-center">
-                            <h3 className="font-semibold">{anime.title}</h3>
-                            <p className="text-sm">{anime.score}</p>
-                          </div>
+                      <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white p-2 rounded">
+                        <div className="text-center">
+                          <h3 className="font-semibold">{anime.title}</h3>
+                          <p className="text-sm">{anime.score}</p>
                         </div>
                       </div>
-                      {/* Anime genres and link */}
-                      <div className="absolute bottom-0 left-0 w-full p-2 rounded-b">
-                        <p className="text-xs text-left px-2">Genres: {anime.genres}</p>
-                      </div>
-                    </Link>
-                  </div>
-                ))}
-              </div>
-            </SimpleBar>
+                    </div>
+                    {/* Anime genres and link */}
+                    <div className="absolute bottom-0 left-0 w-full p-2 rounded-b">
+                      <p className="text-xs text-left px-2">Genres: {anime.genres}</p>
+                    </div>
+                  </Link>
+                </div>
+                  </BlurFade>
+              ))}
+            </div>
           </motion.div>
         </div>
       ))}
