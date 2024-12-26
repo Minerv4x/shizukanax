@@ -2,7 +2,6 @@
 import useSWR from "swr";
 import Link from "next/link";
 import { useParams } from "next/navigation";
-import { RevealWrapper } from "next-reveal";
 import Image from "next/image";
 import { useState } from "react";
 import {
@@ -14,6 +13,7 @@ import {
   PaginationPrevious,
   PaginationEllipsis,
 } from "@/components/ui/pagination"; // Adjust the import path as necessary
+import BlurFade from "@/components/ui/blur-fade";
 
 // Fetch data function
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -82,10 +82,12 @@ export default function Page() {
         </ul>
       </nav>
       <div className="mb-8">
-        <RevealWrapper>
           {/* Create a responsive grid layout */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-4">
             {data?.data?.animeList?.map((anime:any) => (
+            <div>
+              <BlurFade delay={0.25} inView key={anime.animeId}>
+
               <div key={anime.animeId} className="relative flex-none w-full h-56 mb-4 group">
                 <Link href={`/anime/${anime.animeId}`} legacyBehavior>
                   {/* Image container with text overlay */}
@@ -97,7 +99,7 @@ export default function Page() {
                       src={anime.poster}
                       alt={anime.title}
                       className="w-full h-full object-cover rounded"
-                    />
+                      />
                     <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 text-white p-2 rounded">
                       <div className="text-center">
                         <h3 className="font-semibold">{anime.title}</h3>
@@ -116,13 +118,14 @@ export default function Page() {
                       <Link key={genre.genreId} href={`${genre.genreId}`} legacyBehavior>
                         <p className="text-xs text-gray-200 hover:text-primary">{genre.title}</p>
                       </Link>
-                    ))}
+                  ))}
                   </div>
                 </div>
+            </div>
+                  </BlurFade>
               </div>
             ))}
           </div>
-        </RevealWrapper>
       </div>
       {/* Pagination */}
       <Pagination className="mt-8">
