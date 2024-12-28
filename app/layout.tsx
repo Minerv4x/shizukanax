@@ -3,7 +3,7 @@ import { Metadata, Viewport } from "next";
 import { GeistSans } from "geist/font/sans";
 import NextTopLoader from "nextjs-toploader";
 import DotPatternBackground from "@/components/ui/DotPatternBackground"; // Import the client-only component
-
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import { siteConfig } from "@/config/site";
 import { fontSans } from "@/lib/fonts";
 import { cn } from "@/lib/utils";
@@ -11,6 +11,7 @@ import { SiteHeader } from "@/components/site-header";
 import { TailwindIndicator } from "@/components/tailwind-indicator";
 import { ThemeProvider } from "@/components/theme-provider";
 import "@/styles/globals.css"; // Adjust path as needed
+import { Analytics } from '@vercel/analytics/next';
 
 // Move themeColor configuration inside viewport export
 export const viewport: Viewport = {
@@ -60,7 +61,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
                 zIndex={1600}
                 showAtBottom={false}
               />
-              <div className="flex-1">{children}</div>
+              <div className="flex-1">{children}
+                <Analytics/>
+              <SpeedInsights/></div>
             </div>
             <TailwindIndicator />
           </ThemeProvider>
