@@ -113,12 +113,12 @@ export default function IndexPage() {
                           src={episode.poster}
                           alt={episode.poster ? `${episode.title} Poster` : "Default Alt Text"}
                           fill={true}
-                          className="object-cover transition-transform duration-300 group-hover:scale-105"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-sm"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           placeholder="blur"
                           blurDataURL={episode.poster}
                         />
-                              <BorderBeam colorFrom="#d4d3cf" colorTo="#376e5a" />
+                              <BorderBeam colorFrom="#d4d3cf" colorTo="#376e5a" className="rounded-sm" />
 
                         {/* Anime title on hover */}
                         <motion.div
@@ -165,7 +165,7 @@ export default function IndexPage() {
                       src={movie.poster}
                       alt={movie.title}
                       fill={true}
-                      className="object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="object-cover transition-transform duration-300 group-hover:scale-105 rounded-sm"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       placeholder="blur"
                       blurDataURL={movie.poster}
