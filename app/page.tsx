@@ -113,7 +113,7 @@ export default function IndexPage() {
                           src={episode.poster}
                           alt={episode.poster ? `${episode.title} Poster` : "Default Alt Text"}
                           fill={true}
-                          className="object-cover transition-transform duration-300 group-hover:scale-105 rounded"
+                          className="object-cover transition-transform duration-300 group-hover:scale-105"
                           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           placeholder="blur"
                           blurDataURL={episode.poster}
@@ -165,7 +165,7 @@ export default function IndexPage() {
                       src={movie.poster}
                       alt={movie.title}
                       fill={true}
-                      className="object-cover transition-transform duration-300 group-hover:scale-105 rounded "
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       placeholder="blur"
                       blurDataURL={movie.poster}
@@ -212,7 +212,7 @@ export default function IndexPage() {
                       src={batch.poster}
                       alt={batch.title}
                       fill={true}
-                      className="object-cover transition-transform duration-300 group-hover:scale-105 rounded "
+                      className="object-cover transition-transform duration-300 group-hover:scale-105"
                       sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                       placeholder="blur"
                       blurDataURL={batch.poster}
