@@ -13,11 +13,11 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import { Button } from "@/components/ui/button";
+import UserAvatar from "./UserAvatar";
 
 interface MainNavProps {
   items?: NavItem[];
 }
-
 export function MainNav({ items }: MainNavProps) {
   return (
     <div className="flex gap-6 md:gap-10">
@@ -43,10 +43,11 @@ export function MainNav({ items }: MainNavProps) {
                   {item.title}
                 </Link>
               )
-          )}
+            )}
         </nav>
       ) : null}
 
+      <UserAvatar />
       {/* Mobile Drawer */}
       <Drawer>
         {/* Drawer Trigger Button (Visible only on Mobile) */}
